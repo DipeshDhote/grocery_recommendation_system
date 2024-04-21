@@ -8,10 +8,14 @@ def recommend(product):
     distances = sorted(list(enumerate(similarity[name_index])),reverse = True ,key=lambda x:x[1])
 
     recommended_product =[]
+    recommended = []
     recommended_img = []
     for i in distances[1:6]:
         recommended_product.append(products.iloc[i[0]]['name'])
-        recommended_img.append(products.iloc[i[0]]['image_url'])
+        recommended.append(products.iloc[i[0]]['image_url'])
+
+    for i in recommended:
+        recommended_img.append(i.replace(" ",""))
         
     return recommended_product,recommended_img
 
@@ -35,7 +39,7 @@ if st.button('Recommend'):
         st.image(recommended_img[0])
     with col2:
         st.text(recommended_product[1])
-        st.image(recommended_img[1])
+        st.image(recommended_img[2])
 
     with col3:
         st.text(recommended_product[2])
