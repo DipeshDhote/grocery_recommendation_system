@@ -1,0 +1,11 @@
+streamlit
+numpy
+pandas
+python-dotenv
+mysql-connector-python
+pymysql
+scikit-learn
+dataclasses
+ipykernel
+matplotlib
+seaborn
