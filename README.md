@@ -1,1 +1,3 @@
-# This is a grocery recommendation system
+# Grocery Recommendation System
+
+A content based movie recommender system using cosine similarity
