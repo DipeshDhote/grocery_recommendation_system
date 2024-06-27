@@ -9,5 +9,3 @@ dataclasses
 ipykernel
 matplotlib
 seaborn
-gensim
-scipy
