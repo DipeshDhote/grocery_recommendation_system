@@ -1,3 +1,3 @@
 # Grocery Recommendation System
 
-A content based movie recommender system 
+grocery recommender system 
