@@ -56,19 +56,21 @@ jobs:
 
        - name: Login to Amazon ECR
          id: login-ecr
-         uses: aws-actions/amazon-ecr-login@v1
+         uses: aws-actions/amazon-ecr-login@v2
 
-       - name: Pull latest image from ECR
+       - name: Pull latest images
          env:
             ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             ECR_REPOSITORY : ${{ secrets.ECR_REPOSITORY_NAME }}
-            AWS-REGION: ${{ secrets.AWS_REGION }}
-            AWS-ACCESS-KEY-ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS-SECRET-ACCESS-KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             IMAGE_TAG: latest
         
          run: |
-            docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+            docker login -u AWS -p $(aws ecr get-login-password --region $AWS_REGION) $ECR_REGISTRY
+            sudo chmod 666 /var/run/docker.sock
+            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           
        - name: Delete Previous Container on EC2
          env:
@@ -79,11 +81,11 @@ jobs:
             docker rm -f dhote/groceryrec || true
           
        - name: Run Docker Image to serve users
-          
+         env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+          IMAGE_TAG: latest
          run: |
-             docker run -d -p 80:8000 --ipc="host" --name= dhote/groceryrec -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
-       - name: Clean previous images and containers
-         run: |
-             docker system prune -f     
+          docker run -d -p 80:8000 --name dhote/groceryrec  --ipc="host"  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       
 
