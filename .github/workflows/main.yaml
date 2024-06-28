@@ -76,12 +76,12 @@ jobs:
               ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
               IMAGE_TAG: latest
          run: |
-            docker rm -f dhote/groceryrecommendation || true
+            docker rm -f dhote/groceryrec || true
           
        - name: Run Docker Image to serve users
           
          run: |
-             docker run -d -p 80:8000 --ipc="host" --name=grocery -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+             docker run -d -p 80:8000 --ipc="host" --name= dhote/groceryrec -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
        - name: Clean previous images and containers
          run: |
              docker system prune -f     
