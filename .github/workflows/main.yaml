@@ -47,7 +47,7 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: ${{ secrets.AWS_REGION }}
-            
+
         - name: Login to Amazon ECR
           id: login-ecr
           uses: aws-actions/amazon-ecr-login@v2
@@ -109,6 +109,6 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
          run: |
-          docker run -d -p 80:8000 --name dhote/groceryrec  --ipc="host"  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker run -d -p 80:8000 --name groceryrecommendation  --ipc="host"  $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       
 
