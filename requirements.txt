@@ -9,3 +9,4 @@ dataclasses
 ipykernel
 matplotlib
 seaborn
+gunicorn
