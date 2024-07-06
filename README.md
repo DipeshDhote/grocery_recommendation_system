@@ -11,9 +11,7 @@ The Grocery Recommendation System project aims to assist users in discovering gr
 - Usage
 - Model Training
 - Results
-- Contributing
-- License
-- Acknowledgements
+
 
 ## Introduction
 With a vast array of grocery items available, it can be challenging for consumers to identify products that meet their needs and preferences. The Grocery Recommendation System leverages machine learning techniques to analyze users' purchase history and preferences, providing tailored recommendations. This project enhances the shopping experience by suggesting items that users are likely to purchase, thus saving time and effort.
